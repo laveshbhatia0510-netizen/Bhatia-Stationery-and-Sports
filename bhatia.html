@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bhatia Stationery & Sports</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d0d0d;
+    --paper: #faf8f3;
+    --cream: #f0ece0;
+    --gold: #c9a84c;
+    --gold-light: #e8c96a;
+    --rust: #c0472a;
+    --teal: #1a7a6e;
+    --teal-light: #2a9d8f;
+    --muted: #6b6560;
+    --border: #d9d4c7;
+    --card-bg: #ffffff;
+    --shadow: 0 4px 30px rgba(13,13,13,0.08);
+    --shadow-lg: 0 12px 50px rgba(13,13,13,0.14);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0 5%;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 9000;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--gold);
+    transition: height 0.3s ease, box-shadow 0.3s;
+  }
+
+  header.scrolled { height: 58px; box-shadow: 0 4px 24px rgba(0,0,0,0.35); }
+
+  .logo-block { display: flex; align-items: center; gap: 14px; text-decoration: none; color: inherit; }
+
+  .logo-icon {
+    width: 42px; height: 42px;
+    background: var(--gold);
+    border-radius: 10px;
+    display: grid; place-items: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    transition: transform 0.3s;
+  }
+  .logo-icon:hover { transform: rotate(-8deg) scale(1.1); }
+
+  .logo-text h1 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; line-height: 1.1; color: var(--paper); }
+  .logo-text span { font-size: 0.7rem; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; }
+
+  nav { display: flex; gap: 6px; }
+
+  nav a {
+    color: var(--paper);
+    text-decoration: none;
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: background 0.2s, color 0.2s;
+  }
+  nav a:hover, nav a.active { background: var(--gold); color: var(--ink); }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 5px; }
+  .hamburger span { width: 24px; height: 2px; background: var(--paper); border-radius: 2px; transition: 0.3s; }
+
+  .mobile-nav {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 72px; left: 0; right: 0;
+    background: var(--ink);
+    padding: 16px 24px;
+    gap: 6px;
+    z-index: 8999;
+    border-bottom: 1px solid var(--gold);
+  }
+  .mobile-nav.open { display: flex; }
+  .mobile-nav a { color: var(--paper); text-decoration: none; padding: 10px 0; border-bottom: 1px solid #222; font-weight: 500; }
+
+  /* ── HERO ── */
+  #home {
+    margin-top: 72px;
+    min-height: calc(100vh - 72px);
+    display: flex;
+    align-items: center;
+    background: var(--ink);
+    position: relative;
+    overflow: hidden;
+    padding: 60px 5%;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, #1a3a2a 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 80%, #2a1a0a 0%, transparent 50%);
+    opacity: 0.9;
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(201,168,76,0.05) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(201,168,76,0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 640px; }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.4);
+    color: var(--gold-light);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 999px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 900;
+    color: var(--paper);
+    line-height: 1.1;
+    margin-bottom: 20px;
+    animation: fadeUp 0.7s ease 0.1s both;
+  }
+
+  .hero-title em { color: var(--gold); font-style: normal; }
+
+  .hero-sub {
+    color: #aaa89f;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 36px;
+    max-width: 480px;
+    animation: fadeUp 0.7s ease 0.2s both;
+  }
+
+  .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; animation: fadeUp 0.7s ease 0.3s both; }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--ink);
+    padding: 13px 28px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    border: none; cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  .btn-outline {
+    background: transparent;
+    border: 1.5px solid rgba(250,248,243,0.3);
+    color: var(--paper);
+    padding: 13px 28px;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  .hero-stats {
+    display: flex; gap: 32px; margin-top: 52px;
+    animation: fadeUp 0.7s ease 0.4s both;
+  }
+
+  .stat { border-left: 2px solid var(--gold); padding-left: 16px; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--paper); }
+  .stat-label { font-size: 0.75rem; color: #888; letter-spacing: 1px; text-transform: uppercase; }
+
+  .hero-visual {
+    position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
+    width: 380px; height: 380px;
+    opacity: 0.12;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18rem;
+    user-select: none;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  /* ── SECTION WRAPPER ── */
+  .section-wrap { max-width: 1100px; margin: 0 auto; padding: 80px 5%; }
+
+  .section-label {
+    font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--teal); font-weight: 600; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::before { content: ''; width: 28px; height: 2px; background: var(--teal); border-radius: 2px; }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+
+  .section-desc { color: var(--muted); font-size: 1rem; line-height: 1.7; max-width: 520px; margin-bottom: 48px; }
+
+  /* ── PRODUCTS ── */
+  #products { background: var(--cream); }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+  }
+
+  .product-card {
+    background: var(--card-bg);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    transition: transform 0.3s, box-shadow 0.3s;
+    opacity: 0; transform: translateY(40px);
+  }
+  .product-card.show { opacity: 1; transform: translateY(0); transition: opacity 0.5s, transform 0.5s, box-shadow 0.3s; }
+  .product-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+
+  .product-img { width: 100%; height: 200px; object-fit: cover; display: block; }
+
+  .product-body { padding: 20px; }
+  .product-tag {
+    display: inline-block; font-size: 0.65rem; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--teal); font-weight: 600;
+    background: rgba(26,122,110,0.08); padding: 3px 10px; border-radius: 999px;
+    margin-bottom: 10px;
+  }
+  .product-body h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; color: var(--ink); }
+  .product-body p { font-size: 0.87rem; color: var(--muted); line-height: 1.6; }
+
+  /* ── GALLERY ── */
+  #gallery { background: var(--paper); }
+
+  .gallery-masonry {
+    columns: 3; column-gap: 20px;
+  }
+  @media (max-width: 700px) { .gallery-masonry { columns: 2; } }
+
+  .g-item {
+    break-inside: avoid;
+    margin-bottom: 20px;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+
+  .g-item img {
+    width: 100%; display: block;
+    transition: transform 0.4s, filter 0.4s;
+  }
+  .g-item:hover img { transform: scale(1.06); filter: brightness(0.8); }
+
+  .g-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(13,13,13,0.6) 0%, transparent 60%);
+    opacity: 0; transition: opacity 0.3s;
+    display: flex; align-items: flex-end; padding: 16px;
+  }
+  .g-item:hover .g-overlay { opacity: 1; }
+  .g-overlay span { color: white; font-size: 0.8rem; font-weight: 500; }
+
+  /* ── ABOUT ── */
+  #about { background: var(--ink); color: var(--paper); }
+  #about .section-label { color: var(--gold); }
+  #about .section-label::before { background: var(--gold); }
+  #about .section-title { color: var(--paper); }
+  #about .section-desc { color: #aaa; max-width: 100%; }
+
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+  @media (max-width: 700px) { .about-grid { grid-template-columns: 1fr; } }
+
+  .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 28px; }
+
+  .feat-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 18px;
+    border-radius: 14px;
+  }
+  .feat-icon { font-size: 1.5rem; margin-bottom: 8px; }
+  .feat-card h4 { font-size: 0.9rem; font-weight: 600; color: var(--paper); margin-bottom: 4px; }
+  .feat-card p { font-size: 0.78rem; color: #888; }
+
+  .about-image { border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+  .about-image img { width: 100%; display: block; }
+
+  /* ── REVIEWS ── */
+  #reviews { background: var(--cream); }
+
+  .reviews-layout { display: grid; grid-template-columns: 1fr 1.4fr; gap: 48px; align-items: start; }
+  @media (max-width: 800px) { .reviews-layout { grid-template-columns: 1fr; } }
+
+  /* Rating Summary */
+  .rating-summary {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: sticky; top: 90px;
+  }
+
+  .big-rating {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem; font-weight: 900;
+    line-height: 1; color: var(--ink);
+  }
+  .big-stars { font-size: 1.3rem; color: var(--gold); margin: 6px 0; }
+  .rating-count { font-size: 0.82rem; color: var(--muted); margin-bottom: 24px; }
+
+  .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .bar-label { font-size: 0.78rem; color: var(--muted); width: 30px; flex-shrink: 0; }
+  .bar-track { flex: 1; height: 7px; background: var(--border); border-radius: 99px; overflow: hidden; }
+  .bar-fill { height: 100%; background: var(--gold); border-radius: 99px; transition: width 1s ease; width: 0; }
+  .bar-count { font-size: 0.75rem; color: var(--muted); width: 20px; text-align: right; }
+
+  .divider { height: 1px; background: var(--border); margin: 24px 0; }
+
+  /* Write a review */
+  .review-form-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; }
+
+  .star-picker { display: flex; gap: 6px; margin-bottom: 16px; font-size: 1.6rem; cursor: pointer; }
+  .star-picker span { color: var(--border); transition: color 0.15s, transform 0.15s; user-select: none; }
+  .star-picker span.lit { color: var(--gold); }
+  .star-picker span:hover { transform: scale(1.2); }
+
+  .form-row { margin-bottom: 14px; }
+  .form-row label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--ink); margin-bottom: 6px; letter-spacing: 0.3px; }
+  .form-row input, .form-row textarea {
+    width: 100%;
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+    resize: none;
+  }
+  .form-row input:focus, .form-row textarea:focus { border-color: var(--teal); }
+
+  .submit-btn {
+    width: 100%;
+    background: var(--ink);
+    color: var(--paper);
+    border: none; cursor: pointer;
+    padding: 13px;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem; font-weight: 600;
+    transition: background 0.2s, transform 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .submit-btn:hover { background: var(--teal); transform: translateY(-1px); }
+
+  /* Review cards */
+  .reviews-feed { display: flex; flex-direction: column; gap: 16px; }
+
+  .review-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    animation: fadeUp 0.4s ease both;
+  }
+
+  .rc-header { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+  .rc-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; font-weight: 700; color: white;
+    flex-shrink: 0;
+  }
+  .rc-meta { flex: 1; }
+  .rc-name { font-weight: 600; font-size: 0.92rem; }
+  .rc-date { font-size: 0.74rem; color: var(--muted); }
+  .rc-stars { font-size: 0.85rem; color: var(--gold); }
+  .rc-text { font-size: 0.87rem; color: #444; line-height: 1.65; }
+
+  .helpful-btn {
+    margin-top: 12px;
+    background: none; border: 1px solid var(--border);
+    color: var(--muted); font-size: 0.75rem; font-family: 'DM Sans', sans-serif;
+    padding: 4px 12px; border-radius: 999px; cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .helpful-btn:hover { background: var(--cream); color: var(--ink); }
+  .helpful-btn.liked { background: var(--teal); color: white; border-color: var(--teal); }
+
+  .empty-reviews {
+    text-align: center; padding: 48px 24px;
+    color: var(--muted); font-size: 0.9rem;
+  }
+  .empty-reviews .emoji { font-size: 2.5rem; display: block; margin-bottom: 12px; }
+
+  .toast {
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--ink); color: var(--paper);
+    padding: 14px 22px; border-radius: 12px;
+    font-size: 0.88rem; font-weight: 500;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+    z-index: 9999;
+    transform: translateY(80px); opacity: 0;
+    transition: transform 0.4s, opacity 0.4s;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--paper); }
+
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  @media (max-width: 700px) { .contact-grid { grid-template-columns: 1fr; } }
+
+  .contact-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 28px;
+    box-shadow: var(--shadow);
+    display: flex; gap: 18px; align-items: flex-start;
+  }
+
+  .contact-icon {
+    width: 52px; height: 52px;
+    background: var(--cream);
+    border-radius: 14px;
+    display: grid; place-items: center;
+    font-size: 1.4rem; flex-shrink: 0;
+    border: 1px solid var(--border);
+  }
+
+  .contact-card h3 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+  .contact-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+  .contact-card a { color: var(--teal); text-decoration: none; font-weight: 500; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    color: #666;
+    text-align: center;
+    padding: 28px 20px;
+    font-size: 0.82rem;
+  }
+  footer strong { color: var(--gold); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(-50%) rotate(0deg); }
+    50% { transform: translateY(-54%) rotate(4deg); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { display: none; }
+    .hamburger { display: flex; }
+    .hero-visual { display: none; }
+    .hero-stats { gap: 20px; }
+    .about-features { grid-template-columns: 1fr; }
+    .products-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 500px) {
+    .products-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="mainHeader">
+  <a href="#home" class="logo-block">
+    <div class="logo-icon">📚</div>
+    <div class="logo-text">
+      <h1>Bhatia Stationery & Sports</h1>
+      <span>Trusted since 1975 · Raipur</span>
+    </div>
+  </a>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#products">Products</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#about">About</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <div class="hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </div>
+</header>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="#home" onclick="closeMobileNav()">Home</a>
+  <a href="#products" onclick="closeMobileNav()">Products</a>
+  <a href="#gallery" onclick="closeMobileNav()">Gallery</a>
+  <a href="#about" onclick="closeMobileNav()">About</a>
+  <a href="#reviews" onclick="closeMobileNav()">Reviews</a>
+  <a href="#contact" onclick="closeMobileNav()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">⭐ Raipur's Most Trusted Shop</div>
+    <h1 class="hero-title">Your One-Stop<br>Shop for <em>Learning</em><br>&amp; <em>Playing</em></h1>
+    <p class="hero-sub">From notebooks and pens to cricket bats and footballs — Bhatia Stationery &amp; Sports has everything you need, backed by 50+ years of trust.</p>
+    <div class="hero-ctas">
+      <a href="#products" class="btn-primary">Explore Products →</a>
+      <a href="#contact" class="btn-outline">Find Us</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">50+</div>
+        <div class="stat-label">Years of Trust</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">10K+</div>
+        <div class="stat-label">Happy Customers</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Products</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">📚</div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="section-wrap">
+    <div class="section-label">What We Offer</div>
+    <h2 class="section-title">Our Products</h2>
+    <p class="section-desc">Everything a student, athlete, or office worker could need — all under one roof in the heart of Raipur.</p>
+    <div class="products-grid">
+      <div class="product-card">
+        <img class="product-img" src="https://images.unsplash.com/photo-1588072432836-e10032774350?w=800&auto=format&fit=crop" alt="Stationery">
+        <div class="product-body">
+          <span class="product-tag">Education</span>
+          <h3>Stationery Essentials</h3>
+          <p>Notebooks, pens, files, and all school materials for students of every grade.</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <img class="product-img" src="https://images.unsplash.com/photo-1517649763962-0c623066013b?w=800&auto=format&fit=crop" alt="Sports">
+        <div class="product-body">
+          <span class="product-tag">Sports</span>
+          <h3>Sports Equipment</h3>
+          <p>Cricket bats, footballs, badminton rackets, and premium sports gear.</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <img class="product-img" src="https://images.unsplash.com/photo-1593642532400-2682810df593?w=800&auto=format&fit=crop" alt="Printing">
+        <div class="product-body">
+          <span class="product-tag">Services</span>
+          <h3>Printing Services</h3>
+          <p>High-quality printing with modern machines — fast, clear, and affordable.</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <img class="product-img" src="https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?w=800&auto=format&fit=crop" alt="Office Supplies">
+        <div class="product-body">
+          <span class="product-tag">Office</span>
+          <h3>School &amp; Office Supplies</h3>
+          <p>Organizers, folders, sticky notes, staplers, and professional office items.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-wrap">
+    <div class="section-label">Visual Tour</div>
+    <h2 class="section-title">Gallery</h2>
+    <p class="section-desc">A peek inside our world of stationery and sports.</p>
+    <div class="gallery-masonry">
+      <div class="g-item">
+        <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=500&auto=format&fit=crop" alt="Books">
+        <div class="g-overlay"><span>Books &amp; Notebooks</span></div>
+      </div>
+      <div class="g-item">
+        <img src="https://images.unsplash.com/photo-1562564055-71e051d33c19?w=500&auto=format&fit=crop" alt="Sports">
+        <div class="g-overlay"><span>Sports Gear</span></div>
+      </div>
+      <div class="g-item">
+        <img src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=500&auto=format&fit=crop" alt="Art Supplies">
+        <div class="g-overlay"><span>Art Supplies</span></div>
+      </div>
+      <div class="g-item">
+        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=500&auto=format&fit=crop" alt="Fitness">
+        <div class="g-overlay"><span>Fitness Equipment</span></div>
+      </div>
+      <div class="g-item">
+        <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500&auto=format&fit=crop" alt="Stationery">
+        <div class="g-overlay"><span>Premium Stationery</span></div>
+      </div>
+      <div class="g-item">
+        <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=500&auto=format&fit=crop" alt="Outdoor Sports">
+        <div class="g-overlay"><span>Outdoor Sports</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-wrap">
+    <div class="about-grid">
+      <div>
+        <div class="section-label">Our Story</div>
+        <h2 class="section-title">50+ Years of Serving Raipur</h2>
+        <p class="section-desc">Bhatia Stationery &amp; Sports has been a cornerstone of the community since 1975, building a strong reputation for trust, quality, and customer satisfaction across generations.</p>
+        <div class="about-features">
+          <div class="feat-card">
+            <div class="feat-icon">🏅</div>
+            <h4>Quality First</h4>
+            <p>Only trusted brands and verified products.</p>
+          </div>
+          <div class="feat-card">
+            <div class="feat-icon">🤝</div>
+            <h4>Community Rooted</h4>
+            <p>Serving Raipur families for generations.</p>
+          </div>
+          <div class="feat-card">
+            <div class="feat-icon">🖨️</div>
+            <h4>Modern Printing</h4>
+            <p>Fast, clear prints at competitive prices.</p>
+          </div>
+          <div class="feat-card">
+            <div class="feat-icon">⚽</div>
+            <h4>Full Sports Range</h4>
+            <p>Cricket, football, badminton &amp; more.</p>
+          </div>
+        </div>
+      </div>
+      <div class="about-image">
+        <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=700&auto=format&fit=crop" alt="Our Store">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="section-wrap">
+    <div class="section-label">Customer Voices</div>
+    <h2 class="section-title">Reviews</h2>
+    <p class="section-desc">What our customers say about us.</p>
+
+    <div class="reviews-layout">
+      <!-- Left: Summary + Write Review -->
+      <div>
+        <div class="rating-summary">
+          <div class="big-rating" id="avgRating">4.8</div>
+          <div class="big-stars" id="avgStars">★★★★★</div>
+          <div class="rating-count" id="ratingCount">Based on 3 reviews</div>
+
+          <div id="barChart">
+            <div class="bar-row"><span class="bar-label">5★</span><div class="bar-track"><div class="bar-fill" id="bar5"></div></div><span class="bar-count" id="cnt5">3</span></div>
+            <div class="bar-row"><span class="bar-label">4★</span><div class="bar-track"><div class="bar-fill" id="bar4"></div></div><span class="bar-count" id="cnt4">0</span></div>
+            <div class="bar-row"><span class="bar-label">3★</span><div class="bar-track"><div class="bar-fill" id="bar3"></div></div><span class="bar-count" id="cnt3">0</span></div>
+            <div class="bar-row"><span class="bar-label">2★</span><div class="bar-track"><div class="bar-fill" id="bar2"></div></div><span class="bar-count" id="cnt2">0</span></div>
+            <div class="bar-row"><span class="bar-label">1★</span><div class="bar-track"><div class="bar-fill" id="bar1"></div></div><span class="bar-count" id="cnt1">0</span></div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="review-form-title">Write a Review</div>
+
+          <div class="star-picker" id="starPicker">
+            <span data-v="1">★</span>
+            <span data-v="2">★</span>
+            <span data-v="3">★</span>
+            <span data-v="4">★</span>
+            <span data-v="5">★</span>
+          </div>
+          <div id="starHint" style="font-size:0.76rem;color:var(--muted);margin-bottom:14px;">Tap to rate</div>
+
+          <div class="form-row">
+            <label>Your Name</label>
+            <input type="text" id="rName" placeholder="e.g. Rohit Sharma" maxlength="50">
+          </div>
+          <div class="form-row">
+            <label>Your Review</label>
+            <textarea id="rText" rows="4" placeholder="Share your experience..." maxlength="400"></textarea>
+          </div>
+          <button class="submit-btn" onclick="submitReview()">
+            <span>Submit Review</span> <span>✦</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Right: Review feed -->
+      <div>
+        <div class="reviews-feed" id="reviewsFeed"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-wrap">
+    <div class="section-label">Find Us</div>
+    <h2 class="section-title">Get in Touch</h2>
+    <p class="section-desc">We're always happy to help — visit us or give us a call.</p>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-icon">📍</div>
+        <div>
+          <h3>Our Location</h3>
+          <p>Opposite Shahid Smarak, near Raj Talkies,<br>MG Road, Raipur, Chhattisgarh</p>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">📞</div>
+        <div>
+          <h3>Call Us</h3>
+          <p>We're available during shop hours.<br><a href="tel:9406031152">9406031152</a></p>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">🕐</div>
+        <div>
+          <h3>Shop Hours</h3>
+          <p>Monday – Saturday: 9 AM – 8 PM<br>Sunday: 10 AM – 5 PM</p>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">🛒</div>
+        <div>
+          <h3>Wholesale</h3>
+          <p>Bulk orders for schools &amp; institutions. Call us for special pricing.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 <strong>Bhatia Stationery &amp; Sports</strong> · All Rights Reserved · Raipur, Chhattisgarh
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✓ Review submitted! Thank you.</div>
+
+<script>
+// ── NAV SCROLL ──
+window.addEventListener('scroll', () => {
+  const h = document.getElementById('mainHeader');
+  h.classList.toggle('scrolled', window.scrollY > 50);
+
+  // Active nav link
+  const sections = ['home','products','gallery','about','reviews','contact'];
+  let cur = '';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top <= 90) cur = id;
+  });
+  document.querySelectorAll('nav a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + cur);
+  });
+});
+
+// ── MOBILE NAV ──
+function toggleMobileNav() {
+  document.getElementById('mobileNav').classList.toggle('open');
+}
+function closeMobileNav() {
+  document.getElementById('mobileNav').classList.remove('open');
+}
+
+// ── CARD REVEAL ──
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.product-card').forEach(c => observer.observe(c));
+
+// ── BAR FILL ANIMATION ──
+const barObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { updateBars(); barObs.disconnect(); }
+  });
+}, { threshold: 0.3 });
+const barSection = document.getElementById('barChart');
+if (barSection) barObs.observe(barSection);
+
+// ── REVIEWS DATA ──
+const COLORS = ['#1a7a6e','#c9a84c','#c0472a','#6a11cb','#2a4a8c','#8a4a2c'];
+
+let reviews = [
+  { name: 'Priya Sharma', rating: 5, text: 'Best stationery shop in Raipur! Always find everything I need for my kids. Quality is excellent and prices are fair.', date: '2026-03-15', helpful: 0, liked: false },
+  { name: 'Arjun Verma', rating: 5, text: 'Been buying cricket equipment here for years. Top quality bats and great advice from the staff. Highly recommended!', date: '2026-02-28', helpful: 0, liked: false },
+  { name: 'Sunita Patel', rating: 5, text: 'Printing service is super fast and clear. Got my office documents done same day. Will definitely come back!', date: '2026-01-10', helpful: 0, liked: false }
+];
+
+let selectedStar = 0;
+
+function getInitials(name) {
+  return name.trim().split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+}
+
+function starsHTML(r) {
+  return '★'.repeat(r) + '☆'.repeat(5 - r);
+}
+
+function formatDate(d) {
+  return new Date(d).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+function renderReviews() {
+  const feed = document.getElementById('reviewsFeed');
+  if (!reviews.length) {
+    feed.innerHTML = '<div class="empty-reviews"><span class="emoji">💬</span>No reviews yet. Be the first!</div>';
+    return;
+  }
+  feed.innerHTML = reviews.slice().reverse().map((r, i) => `
+    <div class="review-card" style="animation-delay:${i * 0.07}s">
+      <div class="rc-header">
+        <div class="rc-avatar" style="background:${COLORS[i % COLORS.length]}">${getInitials(r.name)}</div>
+        <div class="rc-meta">
+          <div class="rc-name">${r.name}</div>
+          <div class="rc-date">${formatDate(r.date)}</div>
+        </div>
+        <div class="rc-stars">${starsHTML(r.rating)}</div>
+      </div>
+      <div class="rc-text">${r.text}</div>
+      <button class="helpful-btn ${r.liked ? 'liked' : ''}" onclick="markHelpful(${reviews.length - 1 - i})">
+        👍 Helpful ${r.helpful > 0 ? '(' + r.helpful + ')' : ''}
+      </button>
+    </div>
+  `).join('');
+}
+
+function updateStats() {
+  const counts = [0,0,0,0,0];
+  reviews.forEach(r => counts[r.rating - 1]++);
+  const total = reviews.length;
+  const avg = total ? (reviews.reduce((s, r) => s + r.rating, 0) / total).toFixed(1) : '0.0';
+  document.getElementById('avgRating').textContent = avg;
+  document.getElementById('ratingCount').textContent = `Based on ${total} review${total !== 1 ? 's' : ''}`;
+  document.getElementById('avgStars').textContent = '★'.repeat(Math.round(avg)) + '☆'.repeat(5 - Math.round(avg));
+}
+
+function updateBars() {
+  const counts = [0,0,0,0,0];
+  reviews.forEach(r => counts[r.rating - 1]++);
+  const total = reviews.length || 1;
+  [1,2,3,4,5].forEach(v => {
+    const pct = (counts[v-1] / total * 100).toFixed(0);
+    document.getElementById(`bar${v}`).style.width = pct + '%';
+    document.getElementById(`cnt${v}`).textContent = counts[v-1];
+  });
+}
+
+function markHelpful(idx) {
+  if (reviews[idx].liked) return;
+  reviews[idx].helpful++;
+  reviews[idx].liked = true;
+  renderReviews();
+}
+
+// ── STAR PICKER ──
+const stars = document.querySelectorAll('#starPicker span');
+const hint = document.getElementById('starHint');
+const hintTexts = ['', 'Poor 😞', 'Fair 😐', 'Good 🙂', 'Great 😊', 'Excellent 🤩'];
+
+stars.forEach(s => {
+  s.addEventListener('mouseover', () => {
+    const v = +s.dataset.v;
+    stars.forEach(x => x.classList.toggle('lit', +x.dataset.v <= v));
+  });
+  s.addEventListener('mouseleave', () => {
+    stars.forEach(x => x.classList.toggle('lit', +x.dataset.v <= selectedStar));
+  });
+  s.addEventListener('click', () => {
+    selectedStar = +s.dataset.v;
+    stars.forEach(x => x.classList.toggle('lit', +x.dataset.v <= selectedStar));
+    hint.textContent = hintTexts[selectedStar];
+  });
+});
+
+document.getElementById('starPicker').addEventListener('mouseleave', () => {
+  stars.forEach(x => x.classList.toggle('lit', +x.dataset.v <= selectedStar));
+});
+
+// ── SUBMIT REVIEW ──
+function submitReview() {
+  const name = document.getElementById('rName').value.trim();
+  const text = document.getElementById('rText').value.trim();
+
+  if (!name) { shake('rName'); return; }
+  if (!selectedStar) { shake('starPicker'); return; }
+  if (!text) { shake('rText'); return; }
+
+  reviews.push({ name, rating: selectedStar, text, date: new Date().toISOString().split('T')[0], helpful: 0, liked: false });
+
+  document.getElementById('rName').value = '';
+  document.getElementById('rText').value = '';
+  selectedStar = 0;
+  stars.forEach(x => x.classList.remove('lit'));
+  hint.textContent = 'Tap to rate';
+
+  renderReviews();
+  updateStats();
+  updateBars();
+  showToast();
+}
+
+function shake(id) {
+  const el = document.getElementById(id);
+  el.style.animation = 'none';
+  el.offsetHeight;
+  el.style.animation = 'shake 0.4s ease';
+  setTimeout(() => el.style.animation = '', 400);
+}
+
+function showToast() {
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ── INIT ──
+renderReviews();
+updateStats();
+setTimeout(updateBars, 300);
+
+// CSS shake keyframe injection
+const style = document.createElement('style');
+style.textContent = '@keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-6px)} 40%,80%{transform:translateX(6px)} }';
+document.head.appendChild(style);
+</script>
+</body>
+</html>
